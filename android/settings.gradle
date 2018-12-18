@@ -1,0 +1,3 @@
+rootProject.name = 'EasyDomo'
+
+include ':app'
