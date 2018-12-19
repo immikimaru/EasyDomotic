@@ -2,6 +2,9 @@ import React from 'react'
 import { View, Text, Button, TouchableHighlight, Alert } from 'react-native'
 import { createStackNavigator, createAppContainer } from 'react-navigation'
 import TouchID from 'react-native-touch-id'
+import { connect } from 'react-redux'
+
+import { loginUser } from '../../store/actions/userAction'
 
 const optionalConfigObject = {
   title: "Authentication Required", // Android
@@ -12,17 +15,21 @@ const optionalConfigObject = {
   cancelText: "Cancel", // Android
   fallbackLabel: "Show Passcode", // iOS (if empty, then label is hidden)
   unifiedErrors: false, // use unified error messages (default false)
-  passcodeFallback: false // iOS
+  passcodeFallbasck: false // iOS
 }
 
 class LoginScreen extends React.Component {
+  constructor(props){
+    super(props);
+  }
 
-  _pressHandler() {
+  _pressHandler = () => {
     TouchID.authenticate('to demo this react-native component', optionalConfigObject)
       .then(success => {
-        Alert.alert('Authenticated Successfully');
+        this.props.store_loginUser('test','test');
       })
       .catch(error => {
+        console.log(error);
         Alert.alert('Authentication Failed');
       });
   }
@@ -44,4 +51,16 @@ class LoginScreen extends React.Component {
   }
 }
 
-export default LoginScreen
+function mapStateToProps (state) {
+  return {
+    user: state.user
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    store_loginUser: (email, password) => dispatch(loginUser(email, password))
+  }
+}
+
+export default connect( mapStateToProps, mapDispatchToProps)(LoginScreen);
