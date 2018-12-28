@@ -8,7 +8,7 @@ import {
 import { Alert, AsyncStorage } from "react-native";
 import axios from "axios";
 
-const URL = "http://192.168.1.101:3000";
+const URL = "http://192.168.1.130:3000";
 
 export const setUser = user => {
   return {

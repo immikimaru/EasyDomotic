@@ -1,18 +1,32 @@
 import React, { Component } from "react";
 import {Alert} from "react-native";
 import { connect } from "react-redux";
+import { NavigationActions, StackActions } from 'react-navigation';
 
 export default function(ComposedComponent) {
+
   class Authentication extends Component {
     componentWillMount() {
+      console.log('componentWillMount')
       if (!this.props.authenticated) {
-        this.props.navigation.navigate("Login");
+        const resetAction = StackActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: "Login" })],
+          key: null
+        });
+        this.props.navigation.dispatch(resetAction);
       }
     }
 
     componentWillUpdate(nextProps) {
+      console.log('componentWillMount')
       if (!nextProps.authenticated) {
-        this.props.navigation.navigate("Login");
+        const resetAction = StackActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: "Login" })],
+          key: null
+        });
+        this.props.navigation.dispatch(resetAction);
       }
     }
 

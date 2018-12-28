@@ -1,17 +1,30 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { NavigationActions, StackActions } from 'react-navigation';
 
-export default function (ComposedComponent) {
+export default function(ComposedComponent) {
+
   class NotAuthentication extends Component {
+
     componentWillMount() {
       if (this.props.authenticated) {
-        this.props.navigation.navigate("Dashboard");
+        const resetAction = StackActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: "Dashboard" })],
+          key: null
+        });
+        this.props.navigation.dispatch(resetAction);
       }
     }
 
     componentWillUpdate(nextProps) {
       if (nextProps.authenticated) {
-        this.props.navigation.navigate("Dashboard");
+        const resetAction = StackActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: "Dashboard" })],
+          key: null
+        });
+        this.props.navigation.dispatch(resetAction);
       }
     }
 
